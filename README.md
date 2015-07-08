@@ -34,11 +34,11 @@ regular CSS or another style language, there are plenty of Gulp tasks available 
 
 **build:css** Builds your styles, generates validation report, generates source map, minifies output.
 
-**watch** Watches for scripts and style changes and runs build tasks automatically.
+**watch** Runs watch:files and browser:sync tasks.
 
-**watch:js** Watches for scripts changes and builds.
+**watch:files** Watches for scripts and style changes and runs build tasks automatically.
 
-**watch:css** Watches for styles changes and builds.
+**browser:sync** Hosts the BrowserSync plugin as a proxy for your ASP.NET 5 web app.
 
 **clean** Cleans all the output directories.
 
