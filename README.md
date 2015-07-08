@@ -11,6 +11,8 @@ this will reduce the loading time for your web apps compared to loading individu
 
 Source maps ensures great debugging capability while developing, even when referencing the minified versions of outputs.
 
+Need to learn more about gulp to fully understand what's going on? Read [Building With Gulp](http://www.smashingmagazine.com/2014/06/11/building-with-gulp/).
+
 ## Introduction
 
 Visual Studio 2015 makes a big change for web developers, moving away from NuGet packages for client dependencies and
@@ -63,6 +65,33 @@ the "build:lib" on each build.
 
 The gulp tasks will automatically pick up any new files that are added to the "scripts" and "styles" folder on the root
 of your project. You can make sub-folders to split your application into logical and functional modules.
+
+## Questions and Answers
+
+*Q: Why does the index.html include minified files by default?*
+
+A: Frameworks such as Angular require a certain pattern to avoid breaking when minified, by loading the minified
+copies of the output from the beginning, you avoid having to clean up any minification issues at a later time. It's
+also important to start running the production results as early as possible in the development cycle to avoid any
+big suprises. Thirdly it's a matter of performance, depending on your project size, you might get a slight performance
+improvement while developing, debugging and testing your web apps.
+
+*Q: Can I continue to use Browser Link in Visual Studio?*
+
+A: The default template is built on a static index.html with no ASP.NET MVC 6 files running. This means the Browser Link
+feature in Visual Studio is no longer supported. If you are not doing SPA and want instead to use MVC, you can continue
+to use Browser Link by removing the gulp task for reload, or simply continue to use gulp for reloads.
+
+The template relies on BrowserSync, which allows you to sync clicks and other events across multiple running instances
+of your web app, so you can easily have different browsers running and automatically reloading when you modify your
+code. BrowserSync acts as a pass-through proxy between ASP.NET (hosting your app) and it's endpoint.
+
+*Q: How do I set a fixed port for web project debugging?*
+
+A: Go into the properties on your ASP.NET 5 web project, then the Debug tab. In the IIS Express Setting section,
+set your wanted port number. This number must be added to your gulpfile.js for BrowserSync to work.
+
+
 
 ## License
 
