@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>aspnet-template</title>
+
+    <script src="/libs/lib.js"></script>
+    <script src="/modules/app/app.js"></script>
+    <script src="http://localhost:5001/signalr/hubs"></script>
+
+    <link rel="stylesheet" type="text/css" href="/libs/lib.css">
+    <link rel="stylesheet" type="text/css" href="/modules/app/app.css">
+
+    <!-- Until ngNewRouter supports lazy loading or we make a custom lazy loading procedure,
+    we'll include all the modules here. -->
+
+    <script src="/modules/calls/calls.js"></script>
+    <script src="/modules/callsexpected/callsexpected.js"></script>
+    <script src="/modules/cargo/cargo.js"></script>
+    <script src="/modules/customer/customer.js"></script>
+    <script src="/modules/goods/goods.js"></script>
+    <script src="/modules/home/home.js"></script>
+    <script src="/modules/invoice/invoice.js"></script>
+    <script src="/modules/profile/profile.js"></script>
+    <script src="/modules/services/services.js"></script>
+    <script src="/modules/settings/settings.js"></script>
+    <script src="/modules/transmission/transmission.js"></script>
+    <script src="/modules/vessel/vessel.js"></script>
+    <script src="/modules/vesselinharbor/vesselinharbor.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/modules/cargo/cargo.css">
+    <link rel="stylesheet" type="text/css" href="/modules/course/course.css">
+    <link rel="stylesheet" type="text/css" href="/modules/home/home.css">
+    <link rel="stylesheet" type="text/css" href="/modules/invoice/invoice.css">
+    <link rel="stylesheet" type="text/css" href="/modules/settings/settings.css">
+
+</head>
+<body ng-controller="AppController as app">
+
+    <div id="app" class="large">
+
+        <div class="splitView" data-win-control="WinJS.UI.SplitView" data-win-options="{
+            openedDisplayMode: 'inline',
+            closedDisplayMode: 'inline'
+         }">
+            <!-- Pane area -->
+            <div>
+                <div class="header">
+                    <button class="win-splitviewpanetoggle"
+                            data-win-control="WinJS.UI.SplitViewPaneToggle"
+                            data-win-options="{ splitView: select('.splitView') }"></button>
+                    <div class="title">&nbsp;aspnet-template</div>
+                </div>
+
+                <div class="nav-commands">
+                    <!--
+                    <div data-win-control="WinJS.UI.NavBarCommand" ng-link="cargo()" data-win-options="{ label: 'Home', icon: 'home'}"></div>
+                    <div data-win-control="WinJS.UI.NavBarCommand" ng-link="invoice()" data-win-options="{ label: 'Favorite', icon: 'favorite'}"></div>
+                    <div data-win-control="WinJS.UI.NavBarCommand" data-win-options="{ label: 'Settings', icon: 'settings'}"></div>
+                    -->
+
+                    <a ng-link="home()" data-win-control="WinJS.UI.NavBarCommand" data-win-res="{winControl: { label: 'menuHome'}}" data-win-options="{ icon: 'home'}"></a>
+                    <a ng-link="calls()" data-win-control="WinJS.UI.NavBarCommand" data-win-res="{ winControl: { label:'menuAnlop' } }" data-win-options="{ icon: 'url(./modules/settings/images/Anlop.png)'}"></a>
+                    <a ng-link="services()" data-win-control="WinJS.UI.NavBarCommand" data-win-res="{ winControl: { label:'menuServices' } }" data-win-options="{ icon: 'url(./modules/settings/images/Services.png)'}"></a>
+                    <a ng-link="cargo()" data-win-control="WinJS.UI.NavBarCommand" data-win-res="{ winControl: { label:'menuCargo' } }" data-win-options="{ icon: 'url(./modules/settings/images/Cargo.png)'}"></a>
+                    <a ng-link="goods()" data-win-control="WinJS.UI.NavBarCommand" data-win-res="{ winControl: { label:'menuGoods' } }" data-win-options="{ icon: 'url(./modules/settings/images/Goods.png)'}"></a>
+                    <a ng-link="invoice()" data-win-control="WinJS.UI.NavBarCommand" data-win-res="{ winControl: { label:'menuInvoiceLog' } }" data-win-options="{ icon: 'url(./modules/settings/images/invoiceLog.png)'}"></a>
+                    <a ng-link="transmission()" data-win-control="WinJS.UI.NavBarCommand" data-win-res="{ winControl: { label:'menuTransmissionLog' } }" data-win-options="{ icon: 'url(./modules/settings/images/TransmissionLog.png)'}"></a>
+                    <a ng-link="customer()" data-win-control="WinJS.UI.NavBarCommand" data-win-res="{ winControl: { label:'menuCustomer' } }" data-win-options="{ icon: 'url(./modules/settings/images/Customer.png)'}"></a>
+                    <a ng-link="vessel()" data-win-control="WinJS.UI.NavBarCommand" data-win-res="{ winControl: { label:'menuVessel' } }" data-win-options="{ icon: 'url(./modules/settings/images/Vessel.png)'}"></a>
+                    <a ng-link="vesselinharbor()" data-win-control="WinJS.UI.NavBarCommand" data-win-res="{ winControl: { label:'menuVesselInHarbor' } }" data-win-options="{ icon: 'url(./modules/settings/images/VesselInHarbor.png)'}"></a>
+                    <a ng-link="callsexpected()" data-win-control="WinJS.UI.NavBarCommand" data-win-res="{ winControl: { label:'menuAnlopExpected' } }" data-win-options="{ icon: 'url(./modules/settings/images/AnlopExpected.png)'}"></a>
+                    <a ng-link="othercriteria()" data-win-control="WinJS.UI.NavBarCommand" data-win-res="{ winControl: { label:'menuOtherCriteria' } }" data-win-options="{ icon: 'url(./modules/settings/images/OtherCriteria.png)'}"></a>
+
+                    <!-- These could probably be displayed at bottom, but must fix UI for smaller screens then. -->
+                    <a ng-link="profile()" data-win-control="WinJS.UI.NavBarCommand" data-win-res="{ winControl: { label:'menuProfile' } }" data-win-options="{ icon: 'url(./modules/settings/images/you.png)'}"></a>
+                    <a ng-link="settings()" data-win-control="WinJS.UI.NavBarCommand" data-win-res="{ winControl: { label:'menuSettings' } }" data-win-options="{ icon: 'url(./modules/settings/images/settings.png)'}"></a>
+                </div>
+
+                <div class="nav-commands bottom">
+
+                </div>
+            </div>
+
+            <!-- Content area -->
+            <button class="win-splitviewpanetoggle"
+                    data-win-control="WinJS.UI.SplitViewPaneToggle"
+                    data-win-options="{ splitView: select('.splitView') }"></button>
+            <div class="contenttext">
+                <!--<h2 class="win-h2">SplitView Content area</h2>-->
+                <ng-viewport></ng-viewport>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

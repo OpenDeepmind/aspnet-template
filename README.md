@@ -1,17 +1,35 @@
 # aspnet-template
 Improved [Visual Studio 2015](https://www.visualstudio.com/) project template for [ASP.NET 5](http://www.asp.net/).
 
-**Release date: 20th of July 2015** (when Visual Studio 2015 is released).
-
 While the built in ASP.NET 5 (beta) project template in Visual Studio 2015 comes with basic Gulp script, 
 this repository contains an extended and improved template that you can copy and use for your own projects.
 
+Template is designed as a starting point for building large scale Angular applications. It includes dynamic (lazy) loading
+of modules (features) and individual complication of those modules. This is a Single Page Application template where
+all the ASP.NET Razor files (.cshtml) have been removed and is no longer in use.
+
 Template is optimized for performance of the final results, with only two files for scripts and two files for styles,
-this will reduce the loading time for your web apps compared to loading individual components.
+this will reduce the loading time for your web apps compared to loading individual components. Individual modules are
+additionally compiled down to two files and lazy loaded upon request.
 
 Source maps ensures great debugging capability while developing, even when referencing the minified versions of outputs.
 
 Need to learn more about gulp to fully understand what's going on? Read [Building With Gulp](http://www.smashingmagazine.com/2014/06/11/building-with-gulp/).
+
+## Documentation
+
+### Ports
+The template utilizes DNX for hosting and not IIS Express, which is default with the standard ASP.NET 5 beta project template.
+Additionally is the Launch URL when running with F5 configured to launch the BrowserSync page and not directly the DNX hosted
+page.
+
+Following ports are standard with the template:
+
+http://localhost:7600/ - DNX hosted ASP.NET 5 web app.  
+http://localhost:7601/ - BrowserSync proxy URL. Launch URL from F5 (start) and Gulp script.  
+http://localhost:7602/ - BrowserSync settings URL.
+
+Why these ports? There are no widely known applications or services which uses them, so was choosen to avoid any potential conflicts.
 
 ## Introduction
 
@@ -21,6 +39,9 @@ we created this improved project template that you can copy as needed from.
 
 It's based upon regular JavaScript for your scripts, and uses [Sassy CSS](http://sass-lang.com/) (SCSS) for styling. If you want to change to
 regular CSS or another style language, there are plenty of Gulp tasks available to do that.
+
+If you want to use TypeScript as oppose to JavaScript, it's a fairly easy task to customize the template so it uses
+the available TypeScript compiler NPM package and changes the Gulp script filters from .js to .ts.
 
 ## Gulp Tasks
 
@@ -40,11 +61,7 @@ regular CSS or another style language, there are plenty of Gulp tasks available 
 
 **browser:sync** Hosts the BrowserSync plugin as a proxy for your ASP.NET 5 web app.
 
-**clean** Cleans all the output directories.
-
-**clean:css** Cleans the styles directory.
-
-**clean:js** Cleans the scripts directory.
+**clean** Cleans the entire output directory, which is the wwwroot. Make sure you never add files to the wwwroot directly.
 
 ## Common Tasks
 Here are some of the commons developer tasks explained and how the workflow for developing with this template can be done.
@@ -91,6 +108,27 @@ code. BrowserSync acts as a pass-through proxy between ASP.NET (hosting your app
 A: Go into the properties on your ASP.NET 5 web project, then the Debug tab. In the IIS Express Setting section,
 set your wanted port number. This number must be added to your gulpfile.js for BrowserSync to work.
 
+*Q: Why such as large single gulpfile?*
+
+A: While there are many ways to organize your Gulp scripts, with folders and automatic loading, this template is
+implemented with a single script file for all of the Gulp tasks. This is done to reduce amount of files and might be
+a bit easier for beginners to learn.
+
+*Q: Why are external (library) dependencies only in lib.js?*
+
+A: Most of the time, the external (library) dependencies are used all across your modules. To reduce build time
+and complexity of Gulp scripts, all of the external dependencies should be specified in the lib.js and not within
+individual sub-modules.
+
+*Q: Why not read files directly from node_modules folder?*
+
+A: By relying on Browserify, the required JavaScript files for each individual external library is automatically 
+resolved. So if a library changes, e.g. splits into multiple files, you don't need to worry.
+
+*Q: Downloading NPM packages seems to take a long time?*
+
+A: This project template utilizes many NPM packages so there is a lot of files to download. Most of the packages
+are themselves dependent on other packages, so in total there are many thousands of unpackaged files.
 
 
 ## License
